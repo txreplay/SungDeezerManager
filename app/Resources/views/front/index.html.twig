@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Süng</h1>
+    <p>
+        <a href="https://connect.deezer.com/oauth/auth.php?app_id={{  deezer_app_id}}&redirect_uri={{ deezer_redirect_uri }}&perms=basic_access,email,offline_access,manage_library,manage_community,delete_library,listening_history">Log in</a>
+    </p>
+{% endblock %}

@@ -1,0 +1,9 @@
+# Learn more about services, parameters and containers at
+# http://symfony.com/doc/current/book/service_container.html
+parameters:
+#    parameter_name: value
+
+services:
+    deezer.service:
+        class: AppBundle\Services\DeezerService
+        arguments: ["%deezer_app_id%", "%deezer_secret_key%"]
