@@ -10,11 +10,11 @@ use Symfony\Component\HttpFoundation\Request;
 class ApiController extends Controller
 {
     /**
-     * @Route("/api/v1/track", name="upvotes")
+     * @Route("/api/v1/access_token/{access_token}/playlist/{playlist}/song/{song}", name="upvotes")
      */
-    public function postTrackAction(Request $request)
+    public function postTrackAction($access_token, $playlistId, $song)
     {
-        $test = $this->get('deezer.service')->postTrack(1862036222, 'fr1YKY1pBQxCvTd7i6GurXWlaVkaOYP3w1kzqfIc0FT3Bz2m88', 124874352);
+        $test = $this->get('deezer.service')->postTrack($playlistId, $access_token, $song);
 
         return $this->json($test);
     }
