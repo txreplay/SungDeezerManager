@@ -35,14 +35,21 @@ class FirebaseService
         if (!array_search($author, $likers)) {
             $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$songId.'/likes/'.md5($author), $author);
 
-            return true;
-        } else {
-            return false;
         }
+
+        return count($likers);
     }
 
     public function unlikeOnFirebase($playlistId, $songId, $author='Manu')
     {
         $this->firebase->delete($this->default_path.'/'.$playlistId.'/songs/'.$songId.'/likes/'.md5($author));
+
+        $likes = $this->firebase->get($this->default_path.'/'.$playlistId.'/songs/'.$songId.'/likes');
+        $likers = [];
+        foreach (json_decode($likes) as $liker) {
+            $likers[] = $liker;
+        }
+
+        return count($likers);
     }
 }
