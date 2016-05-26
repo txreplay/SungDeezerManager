@@ -22,6 +22,27 @@ class FirebaseService
         $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/id', $song->id);
         $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/title', $song->title);
         $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/artist', $song->artist->name);
-        $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/likes', 1);
+        $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/likes/'.md5($author), $author);
+    }
+
+    public function likeOnFirebase($playlistId, $songId, $author='Manu')
+    {
+        $likes = $this->firebase->get($this->default_path.'/'.$playlistId.'/songs/'.$songId.'/likes');
+        $likers = [];
+        foreach (json_decode($likes) as $liker) {
+            $likers[] = $liker;
+        }
+        if (!array_search($author, $likers)) {
+            $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$songId.'/likes/'.md5($author), $author);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function unlikeOnFirebase($playlistId, $songId, $author='Manu')
+    {
+        $this->firebase->delete($this->default_path.'/'.$playlistId.'/songs/'.$songId.'/likes/'.md5($author));
     }
 }
