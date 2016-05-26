@@ -40,13 +40,23 @@ class DeezerService
         return json_decode(file_get_contents($api_url));
     }
 
-    public function postTrack($playlistId, $access_token, $song, $order=4)
+    public function postSong($playlistId, $access_token, $songId, $order=0)
     {
         $data = $this->client->post($this->deezer_base_url. "/playlist/".$playlistId."/tracks/", array(
             'query' => [
                 'access_token' => $access_token,
-                'song' => $song,
-                'order' => $order
+                'song' => $songId,
+                'order' => $songId
+            ]
+        ));
+        return json_decode($data->getBody()->getContents());
+    }
+
+    public function searchSong($query)
+    {
+        $data = $this->client->get($this->deezer_base_url. "/search", array(
+            'query' => [
+                'q' => $query
             ]
         ));
 

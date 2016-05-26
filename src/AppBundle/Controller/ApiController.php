@@ -10,13 +10,24 @@ use Symfony\Component\HttpFoundation\Request;
 class ApiController extends Controller
 {
     /**
-     * @Route("/api/v1/access_token/{access_token}/playlist/{playlist}/song/{song}", name="upvotes")
+     * @Route("/api/v1/access_token/{access_token}/playlist/{playlistId}/song/{songId}", name="postToPlaylist")
      */
-    public function postTrackAction($access_token, $playlistId, $song)
+    public function postToPlaylistAction($access_token, $playlistId, $songId)
     {
-        $test = $this->get('deezer.service')->postTrack($playlistId, $access_token, $song);
+        $test = $this->get('deezer.service')->postSong($playlistId, $access_token, $songId);
+        $firebase = $this->get('firebase.service')->pushSongToFirebase($playlistId, $songId);
 
         return $this->json($test);
+    }
+
+    /**
+     * @Route("/api/v1/search/{query}", name="search")
+     */
+    public function searchAction($query)
+    {
+        $result = $this->get('deezer.service')->searchSong($query);
+
+        return $this->json($result);
     }
 
     private function json($data, $cacheTime = null, $status = 200)

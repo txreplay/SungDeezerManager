@@ -7,3 +7,6 @@ services:
     deezer.service:
         class: AppBundle\Services\DeezerService
         arguments: ["%deezer_app_id%", "%deezer_secret_key%"]
+    firebase.service:
+            class: AppBundle\Services\FirebaseService
+            arguments: []
