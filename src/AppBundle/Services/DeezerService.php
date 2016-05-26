@@ -35,7 +35,7 @@ class DeezerService
         }
 
         $api_url = $this->deezer_base_url.'/'.$object."/?access_token=".$session->get('access_token');
-        var_dump($session->get('access_token'));
+//        var_dump($session->get('access_token'));
 
         return json_decode(file_get_contents($api_url));
     }

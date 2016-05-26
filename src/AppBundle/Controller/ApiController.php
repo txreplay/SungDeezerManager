@@ -17,7 +17,7 @@ class ApiController extends Controller
         $response = $this->get('deezer.service')->postSong($playlistId, $access_token, $songId);
         if ($response === true) {
             $song = $this->get('deezer.service')->getSong($songId);
-            $firebase = $this->get('firebase.service')->pushSongToFirebase($playlistId, $songId);
+            $firebase = $this->get('firebase.service')->pushSongToFirebase($playlistId, $song);
 
             return $this->json($song);
         } else {

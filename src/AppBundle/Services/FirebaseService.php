@@ -9,7 +9,7 @@ class FirebaseService
 {
     private $defaul_url = 'https://sung.firebaseio.com/';
     private $default_token = 'R3EaAojB9LbFJxGu8e1RDWcsWi0M5s8GjJT6yW9F';
-    private $default_path = '/data';
+    private $default_path = '/playlists';
 
     function __construct()
     {
@@ -18,6 +18,10 @@ class FirebaseService
 
     public function pushSongToFirebase($playlistId, $song, $author='Valentin')
     {
-        $this->firebase->push($this->default_path.'/'.$playlistId.'/'.$song, $author);
+        $this->firebase->set($this->default_path.'/'.$playlistId.'/author', $author);
+        $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/id', $song->id);
+        $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/title', $song->title);
+        $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/artist', $song->artist->name);
+        $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/likes', 1);
     }
 }
