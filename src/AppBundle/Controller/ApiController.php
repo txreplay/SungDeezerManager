@@ -14,10 +14,14 @@ class ApiController extends Controller
      */
     public function postToPlaylistAction($access_token, $playlistId, $songId)
     {
-        $test = $this->get('deezer.service')->postSong($playlistId, $access_token, $songId);
-        $firebase = $this->get('firebase.service')->pushSongToFirebase($playlistId, $songId);
+        $response = $this->get('deezer.service')->postSong($playlistId, $access_token, $songId);
+        if ($response === true) {
+            $song = $this->get('deezer.service')->getSong($songId);
 
-        return $this->json($test);
+            return $this->json($song);
+        } else {
+            return $this->json(false);
+        }
     }
 
     /**

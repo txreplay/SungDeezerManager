@@ -49,6 +49,14 @@ class DeezerService
                 'order' => $songId
             ]
         ));
+
+        return json_decode($data->getBody()->getContents());
+    }
+
+    public function getSong($songId)
+    {
+        $data = $this->client->get($this->deezer_base_url. "/track/".$songId);
+
         return json_decode($data->getBody()->getContents());
     }
 
