@@ -18,7 +18,7 @@ class FirebaseService
 
     public function pushSongToFirebase($playlistId, $song, $author='Valentin')
     {
-        $this->firebase->set($this->default_path.'/'.$playlistId.'/author', $author);
+        $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/author', $author);
         $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/id', $song->id);
         $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/title', $song->title);
         $this->firebase->set($this->default_path.'/'.$playlistId.'/songs/'.$song->id.'/artist', $song->artist->name);
